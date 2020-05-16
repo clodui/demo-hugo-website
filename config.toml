@@ -1,0 +1,4 @@
+baseURL = "https://demo-hugo-website.clodui.com"
+languageCode = "en-us"
+title = "Hugo on Clodui"
+theme = "ananke"

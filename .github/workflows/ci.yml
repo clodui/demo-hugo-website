@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v1
+        with:
+          submodules: true # Fetch Hugo themes
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "0.70.0"
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy website
+        uses: clodui/actions-cli@v2.0
+        with:
+          username: ${{ secrets.CLODUI_USERNAME }}
+          password: ${{ secrets.CLODUI_PASSWORD }}
+          website-id: ${{ secrets.CLODUI_WEBSITE_ID }}
+          source-dir: ./public
+          publish: publish
